@@ -134,7 +134,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "slack-human": {
       "command": "npx",
-              "args": ["hitlslack"],
+      "args": ["hitlslack"],
       "env": {
         "SLACK_BOT_TOKEN": "xoxb-your-bot-token",
         "SLACK_APP_TOKEN": "xapp-your-app-token",
