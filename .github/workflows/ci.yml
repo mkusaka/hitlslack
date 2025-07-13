@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   ci:
@@ -34,7 +33,7 @@ jobs:
         run: pnpm run typecheck
 
       - name: Run tests
-        run: pnpm test -- --run
+        run: pnpm test
 
       - name: Run test coverage
         run: pnpm run test:coverage

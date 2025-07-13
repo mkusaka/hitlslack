@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { mockConfig } from "./test-utils.js";
 
 // Use vi.hoisted to ensure mock functions are available before vi.mock
@@ -12,6 +12,7 @@ const { mockAuthTest, mockPostMessage, mockSocketOn, mockSocketStart, mockSocket
     socketEventHandlers: {} as { [key: string]: Function[] }
   };
 });
+
 
 // Mock WebClient
 vi.mock("@slack/web-api", () => {
@@ -59,6 +60,7 @@ describe("SlackHumanSocketClient", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers();
     
     // Clear event handlers
     for (const key in socketEventHandlers) {
@@ -90,6 +92,11 @@ describe("SlackHumanSocketClient", () => {
     });
     
     client = new SlackHumanSocketClient(mockConfig);
+  });
+
+  afterEach(() => {
+    vi.clearAllTimers();
+    vi.useRealTimers();
   });
 
   // Helper to emit socket events
@@ -152,7 +159,7 @@ describe("SlackHumanSocketClient", () => {
       const answerPromise = client.askHuman(question);
 
       // Wait for the message to be posted
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await vi.advanceTimersByTimeAsync(10);
 
       // Get the message timestamp from the mock
       const postMessageCall = mockPostMessage.mock.calls[0];
@@ -183,7 +190,7 @@ describe("SlackHumanSocketClient", () => {
     it("should use existing thread for subsequent questions", async () => {
       // First question
       const firstAnswer = client.askHuman("First question");
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await vi.advanceTimersByTimeAsync(10);
       
       // Simulate response to establish thread
       emitSocketEvent("message", {
@@ -201,7 +208,7 @@ describe("SlackHumanSocketClient", () => {
 
       // Second question
       client.askHuman("Second question");
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await vi.advanceTimersByTimeAsync(10);
 
       expect(mockPostMessage).toHaveBeenLastCalledWith({
         channel: mockConfig.SLACK_CHANNEL_ID,
@@ -212,13 +219,19 @@ describe("SlackHumanSocketClient", () => {
 
     it("should timeout if no response received", async () => {
       const promise = client.askHuman("Timeout question");
+      
+      // Immediately catch the rejection to prevent unhandled rejection
+      const expectation = expect(promise).rejects.toThrow("Response timeout after 5000ms");
+      
+      // Fast forward time to trigger timeout
+      await vi.advanceTimersByTimeAsync(5000);
 
-      await expect(promise).rejects.toThrow("Response timeout after 5000ms");
-    }, 10000);
+      await expectation;
+    });
 
     it("should ignore messages from other users", async () => {
       const answerPromise = client.askHuman("Test question");
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await vi.advanceTimersByTimeAsync(10);
 
       // Message from wrong user
       emitSocketEvent("message", {
@@ -250,7 +263,7 @@ describe("SlackHumanSocketClient", () => {
 
     it("should ignore non-thread messages", async () => {
       const answerPromise = client.askHuman("Test question");
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await vi.advanceTimersByTimeAsync(10);
 
       // Message without thread_ts
       emitSocketEvent("message", {
@@ -263,11 +276,28 @@ describe("SlackHumanSocketClient", () => {
         ack: vi.fn(),
       });
 
-      // Still waiting for response
+      // Still waiting for response - advance time but not enough to trigger real timeout
+      await vi.advanceTimersByTimeAsync(100);
+      
+      // The answer promise should still be pending
       await expect(Promise.race([
         answerPromise,
-        new Promise(resolve => setTimeout(() => resolve("timeout"), 100))
-      ])).resolves.toBe("timeout");
+        Promise.resolve("still-waiting")
+      ])).resolves.toBe("still-waiting");
+      
+      // Clean up by resolving the promise to avoid timeout
+      emitSocketEvent("message", {
+        event: {
+          type: "message",
+          channel: mockConfig.SLACK_CHANNEL_ID,
+          user: mockConfig.SLACK_USER_ID,
+          text: "Clean up",
+          thread_ts: "1234567890.123456",
+        },
+        ack: vi.fn(),
+      });
+      
+      await answerPromise;
     });
 
     it("should handle postMessage errors", async () => {
@@ -283,7 +313,7 @@ describe("SlackHumanSocketClient", () => {
       
       // Create a thread
       const firstAnswer = client.askHuman("First question");
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await vi.advanceTimersByTimeAsync(10);
       
       // Simulate response
       emitSocketEvent("message", {
@@ -305,7 +335,7 @@ describe("SlackHumanSocketClient", () => {
       // Next question should create new thread
       mockPostMessage.mockClear();
       const secondAnswer = client.askHuman("New thread question");
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await vi.advanceTimersByTimeAsync(10);
 
       expect(mockPostMessage).toHaveBeenCalledWith({
         channel: mockConfig.SLACK_CHANNEL_ID,

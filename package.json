@@ -12,10 +12,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc && chmod +x dist/index.js",
-    "test": "vitest",
+    "build": "rm -rf dist && tsc && (chmod +x dist/index.js 2>/dev/null || true)",
+    "test": "vitest run",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage",
+    "test:coverage": "vitest run --coverage",
     "debug": "tsx src/index.ts",
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
