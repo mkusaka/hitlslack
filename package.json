@@ -1,10 +1,10 @@
 {
-  "name": "hitls",
+  "name": "hitlslack",
   "version": "0.0.1",
   "description": "MCP server that enables AI assistants to ask questions to humans via Slack",
   "type": "module",
   "bin": {
-    "hitls": "./dist/index.js"
+    "hitlslack": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "files": [

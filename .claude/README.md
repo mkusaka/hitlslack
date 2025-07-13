@@ -1,6 +1,6 @@
 # Claude Code Configuration
 
-This directory contains Claude Code configurations for the hitls project.
+This directory contains Claude Code configurations for the hitlslack project.
 
 ## Structure
 

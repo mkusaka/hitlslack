@@ -60,7 +60,7 @@ async function main() {
 
     const server = new McpServer(
       {
-        name: "hitls",
+        name: "hitlslack",
         version: packageJson.version,
       },
       serverOptions

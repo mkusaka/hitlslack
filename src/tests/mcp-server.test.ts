@@ -11,7 +11,7 @@ describe("MCP Server Integration", () => {
   describe("Server Configuration", () => {
     it("should create server with correct metadata", () => {
       const server = new McpServer({
-        name: "hitls",
+        name: "hitlslack",
         version: "0.1.0",
       });
 
@@ -29,7 +29,7 @@ describe("MCP Server Integration", () => {
 
       const server = new McpServer(
         {
-          name: "hitls",
+          name: "hitlslack",
           version: "0.1.0",
         },
         serverOptions
@@ -43,7 +43,7 @@ describe("MCP Server Integration", () => {
   describe("Tool Registration", () => {
     it("should register ask_human tool", () => {
       const server = new McpServer({
-        name: "hitls",
+        name: "hitlslack",
         version: "0.1.0",
       });
 
@@ -65,7 +65,7 @@ describe("MCP Server Integration", () => {
 
     it("should register reset_thread tool", () => {
       const server = new McpServer({
-        name: "hitls",
+        name: "hitlslack",
         version: "0.1.0",
       });
 

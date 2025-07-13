@@ -1,4 +1,4 @@
-# hitls - Human-in-the-Loop Slack
+# hitlslack - Human-in-the-Loop Slack
 
 An MCP (Model Context Protocol) server that enables AI assistants to ask questions to humans via Slack and wait for their responses. This allows AI systems to request human input when they need clarification, confirmation, or access to information only humans can provide.
 
@@ -14,13 +14,13 @@ An MCP (Model Context Protocol) server that enables AI assistants to ask questio
 ## Installation
 
 ```bash
-npm install -g hitls
+npm install -g hitlslack
 ```
 
 Or use directly with npx:
 
 ```bash
-npx hitls
+npx hitlslack
 ```
 
 ## Prerequisites
@@ -122,7 +122,7 @@ claude mcp add slack-human \
   -e SLACK_APP_TOKEN='xapp-your-app-token' \
   -e SLACK_CHANNEL_ID='C1234567890' \
   -e SLACK_USER_ID='U1234567890' \
-  -- npx -y hitls@latest
+  -- npx -y hitlslack@latest
 ```
 
 ### Claude Desktop Configuration
@@ -134,7 +134,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "slack-human": {
       "command": "npx",
-      "args": ["hitls"],
+              "args": ["hitlslack"],
       "env": {
         "SLACK_BOT_TOKEN": "xoxb-your-bot-token",
         "SLACK_APP_TOKEN": "xapp-your-app-token",
@@ -198,8 +198,8 @@ Response: "Thread reset. Next question will start a new conversation."
 
 ```bash
 # Clone the repository
-git clone https://github.com/mkusaka/hitls
-cd hitls
+git clone https://github.com/mkusaka/hitlslack
+cd hitlslack
 
 # Install dependencies
 pnpm install

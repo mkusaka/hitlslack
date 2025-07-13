@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-hitls (Human-in-the-Loop Slack) is an MCP (Model Context Protocol) server that enables AI assistants to ask questions to humans via Slack and wait for their responses.
+hitlslack (Human-in-the-Loop Slack) is an MCP (Model Context Protocol) server that enables AI assistants to ask questions to humans via Slack and wait for their responses.
 
 ## Build and Development Commands
 
