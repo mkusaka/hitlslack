@@ -45,7 +45,7 @@ export class SlackHumanSocketClient {
       // Set up socket mode event handlers
       this.socketClient.on("message", async ({ event, ack }) => {
         await ack();
-        
+
         if (event.type === "message" && event.channel === this.config.SLACK_CHANNEL_ID) {
           await this.handleMessage(event);
         }
@@ -81,7 +81,7 @@ export class SlackHumanSocketClient {
   private async handleMessage(event: any): Promise<void> {
     // Only process messages from the specified user
     if (event.user !== this.config.SLACK_USER_ID) return;
-    
+
     // Only process thread replies
     if (!event.thread_ts) return;
 
@@ -89,7 +89,7 @@ export class SlackHumanSocketClient {
     const pending = this.pendingQuestions.get(event.thread_ts);
     if (pending) {
       const answer = event.text || "";
-      
+
       // Clear timeout and resolve
       clearTimeout(pending.timeoutId);
       pending.resolve(answer);

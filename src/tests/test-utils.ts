@@ -27,7 +27,7 @@ export function createMockWebClient() {
 
 export function createMockSocketClient() {
   const handlers: { [key: string]: Function[] } = {};
-  
+
   return {
     on: vi.fn((event: string, handler: Function) => {
       if (!handlers[event]) {
@@ -39,7 +39,7 @@ export function createMockSocketClient() {
     disconnect: vi.fn().mockResolvedValue(undefined),
     emit: (event: string, ...args: any[]) => {
       if (handlers[event]) {
-        handlers[event].forEach(handler => handler(...args));
+        handlers[event].forEach((handler) => handler(...args));
       }
     },
   };

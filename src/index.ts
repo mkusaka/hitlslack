@@ -19,10 +19,7 @@ import { dirname, join } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const packageJson = JSON.parse(
-  readFileSync(join(__dirname, "..", "package.json"), "utf-8")
-);
-
+const packageJson = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-8"));
 
 const serverInstructions = `
 This server enables AI assistants to ask questions to humans via Slack and wait for their responses.
@@ -48,7 +45,7 @@ async function main() {
   try {
     // Load configuration
     const config = loadConfig();
-    
+
     // Initialize Slack client
     const slackClient = new SlackHumanSocketClient(config);
     await slackClient.connect();
@@ -60,7 +57,7 @@ async function main() {
       },
       instructions: serverInstructions,
     };
-    
+
     const server = new McpServer(
       {
         name: "hitls",
@@ -82,7 +79,7 @@ async function main() {
         try {
           logger.info("Tool invoked: ask_human", { question });
           const answer = await slackClient.askHuman(question);
-          
+
           return {
             content: [
               {
@@ -95,7 +92,7 @@ async function main() {
         } catch (error) {
           logger.error("Error in ask_human tool:", error);
           const errorMessage = error instanceof Error ? error.message : "Unknown error";
-          
+
           return {
             content: [
               {
@@ -117,7 +114,7 @@ async function main() {
       async () => {
         try {
           slackClient.resetThread();
-          
+
           return {
             content: [
               {
@@ -129,7 +126,7 @@ async function main() {
           };
         } catch (error) {
           logger.error("Error in reset_thread tool:", error);
-          
+
           return {
             content: [
               {

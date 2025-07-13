@@ -90,6 +90,7 @@ LOG_LEVEL=info                 # Log level (default: info)
 ### Finding IDs
 
 #### Channel ID
+
 1. In Slack, right-click on the channel name
 2. Select "View channel details"
 3. Scroll to the bottom
@@ -97,12 +98,14 @@ LOG_LEVEL=info                 # Log level (default: info)
 5. Copy this ID (starts with C)
 
 #### User ID
+
 1. Click on the user's profile picture or name
 2. Click the three dots (...) "More actions"
 3. Select "Copy member ID"
 4. The ID will be copied to clipboard (starts with U)
 
 Alternatively:
+
 - Go to your workspace settings
 - Click "Manage members"
 - Click on a member
@@ -146,6 +149,7 @@ Add to your `claude_desktop_config.json`:
 ### Claude Code Configuration
 
 1. Set environment variables:
+
    ```bash
    export SLACK_BOT_TOKEN="xoxb-your-bot-token"
    export SLACK_APP_TOKEN="xapp-your-app-token"
@@ -162,9 +166,11 @@ Add to your `claude_desktop_config.json`:
 Ask a question to a human via Slack and wait for their response.
 
 **Parameters:**
+
 - `question` (string, required): The question to ask the human
 
 **Example:**
+
 ```
 AI: "I need to ask a human something"
 Tool: ask_human({ question: "What environment should I deploy to?" })
@@ -180,6 +186,7 @@ Reset the conversation thread to start a new topic.
 **Parameters:** None
 
 **Example:**
+
 ```
 Tool: reset_thread()
 Response: "Thread reset. Next question will start a new conversation."
@@ -242,15 +249,18 @@ pnpm run lint
 ## Troubleshooting
 
 ### Bot not responding
+
 - Ensure the bot is invited to the channel
 - Check that Socket Mode is enabled
 - Verify the app-level token has `connections:write` scope
 
 ### Authentication errors
+
 - Regenerate tokens if they've expired
 - Ensure bot token starts with `xoxb-` and app token with `xapp-`
 
 ### Missing messages
+
 - Check Event Subscriptions are enabled
 - Verify `message.channels` event is subscribed
 - Ensure the bot has required permissions
@@ -262,4 +272,3 @@ MIT
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-

@@ -76,12 +76,7 @@ describe("MCP Server Integration", () => {
 
       // This should not throw
       expect(() => {
-        server.tool(
-          "reset_thread",
-          "Reset the conversation thread",
-          {},
-          mockHandler
-        );
+        server.tool("reset_thread", "Reset the conversation thread", {}, mockHandler);
       }).not.toThrow();
     });
   });
