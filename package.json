@@ -22,7 +22,7 @@
     "lint": "oxlint src",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "prepare": "npm run build"
+    "prepare": "pnpm run build"
   },
   "keywords": [
     "mcp",
