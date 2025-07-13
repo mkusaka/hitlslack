@@ -33,7 +33,9 @@ pnpm run debug            # Run with tsx for debugging
 ## Architecture
 
 ### MCP Server Structure
+
 The project implements an MCP server that exposes two tools:
+
 - `ask_human`: Sends a question to a human via Slack and waits for their response
 - `reset_thread`: Resets the conversation thread to start fresh
 
@@ -41,7 +43,7 @@ The project implements an MCP server that exposes two tools:
 
 1. **MCP Server** (`src/index.ts`): Entry point that registers tools and handles MCP protocol communication
 
-2. **Slack Integration** (`src/lib/slack-human-socket-client.ts`): 
+2. **Slack Integration** (`src/lib/slack-human-socket-client.ts`):
    - Uses Socket Mode for real-time bidirectional communication
    - Manages conversation threads to maintain context
    - Handles timeouts (default 5 minutes) for human responses
@@ -72,6 +74,7 @@ The project implements an MCP server that exposes two tools:
 ## CI/CD Configuration
 
 The project uses GitHub Actions with two workflows:
+
 - `ci.yml`: Runs on every push - linting, type checking, tests, and build
 - `release.yml`: Automated npm publishing on version tags
 
@@ -80,7 +83,9 @@ CI uses Node.js 22.x and pnpm 9.
 ## Claude Code Integration
 
 ### Custom Commands
+
 - `/bump [patch|minor|major]`: Version bump command
 
 ### Hooks
+
 Auto-formatting hook runs prettier after file modifications (Write/Edit/MultiEdit operations).

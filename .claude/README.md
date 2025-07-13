@@ -17,6 +17,7 @@ This directory contains Claude Code configurations for the hitls project.
 The project is configured to automatically run `prettier --write` after any file modifications through Claude Code. This ensures consistent code formatting without manual intervention.
 
 The hook triggers after:
+
 - `Write` operations (creating new files)
 - `Edit` operations (modifying existing files)
 - `MultiEdit` operations (multiple edits in one file)
