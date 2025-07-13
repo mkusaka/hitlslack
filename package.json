@@ -1,0 +1,59 @@
+{
+  "name": "hitls",
+  "version": "0.1.0",
+  "description": "MCP server that enables AI assistants to ask questions to humans via Slack",
+  "type": "module",
+  "bin": {
+    "hitls": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc && chmod +x dist/index.js",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "debug": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "lint": "oxlint src",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "slack",
+    "human-in-the-loop",
+    "ai-assistant"
+  ],
+  "author": "Masato Kusaka",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.0",
+    "@slack/web-api": "^7.9.3",
+    "@slack/socket-mode": "^1.3.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.3",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "oxlint": "^0.17.0",
+    "prettier": "^3.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
